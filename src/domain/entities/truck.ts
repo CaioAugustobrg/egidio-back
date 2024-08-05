@@ -1,20 +1,16 @@
 import { Entity } from "../core/Entity";
 
 export interface TruckProps {
-    truckBooleanValuesId: boolean
-    truckStringValuesId: boolean
+    licensePlate: string
 }
 
 export class Truck extends Entity<TruckProps> {
-    public truckBooleanValuesId: boolean
-    public truckStringValuesId: boolean
+    public licensePlate: string
     
     public constructor(props: TruckProps) {
         super();
-        this.truckBooleanValuesId = props.truckBooleanValuesId
-        this.truckStringValuesId = props.truckStringValuesId
+       
+        this.licensePlate = props.licensePlate
         }
-
-    
 }
 

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import crypto from 'crypto'
 
 export abstract class Entity<T> {

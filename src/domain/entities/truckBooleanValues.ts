@@ -15,7 +15,7 @@ export interface TruckBooleanProps {
     farois: boolean
     lanternas: boolean
     luzInternaBau: boolean
-    truckId: String
+    truckId?: string
 }
 
 export class TruckBooleanValues extends Entity<TruckBooleanProps> {
@@ -28,10 +28,11 @@ export class TruckBooleanValues extends Entity<TruckBooleanProps> {
     public aparelhoFrio: boolean
     public ganchos: boolean
     public limpezaQuantidades: boolean
+    public pneusIluminacao: boolean
     public farois: boolean
     public lanternas: boolean
     public luzInternaBau: boolean
-    public truckId: String
+    public truckId?: string
     public constructor(props: TruckBooleanProps) {
         super();
         this.clrv = props.clrv
@@ -42,6 +43,8 @@ export class TruckBooleanValues extends Entity<TruckBooleanProps> {
         this.borrachasPortas = props.borrachasPortas
         this.aparelhoFrio = props.aparelhoFrio
         this.ganchos = props.ganchos
+        this.pneusIluminacao = props.pneusIluminacao
+
         this.limpezaQuantidades = props.limpezaQuantidades
         this.farois = props.farois
         this.lanternas = props.lanternas

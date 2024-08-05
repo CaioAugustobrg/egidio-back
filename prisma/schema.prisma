@@ -1,0 +1,109 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Truck {
+  id                String              @id @default(uuid())
+  licensePlate      String?             @unique
+  truckVerification truckVerification[] @relation("licensePlaterel")
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @default(now())
+}
+
+model truckVerification {
+  id                   String              @id @default(uuid())
+  truck                Truck?              @relation("licensePlaterel", fields: [truckId], references: [id])
+  truckId              String?
+  booleanValues        TruckBooleanValues? @relation("BooleanValues")
+  truckBooleanValuesId String?
+  stringValues         TruckStringValues?  @relation("StringValues")
+  truckStringValuesId  String?
+  createdAt            DateTime            @default(now())
+  updateAt             DateTime            @default(now())
+}
+
+model TruckBooleanValues {
+  id                 String             @id @default(uuid())
+  clrv               Boolean
+  cvv                Boolean
+  antt               Boolean
+  furos              Boolean
+  vedacao            Boolean
+  borrachasPortas    Boolean
+  aparelhoFrio       Boolean
+  ganchos            Boolean
+  pneusIluminacao    Boolean
+  limpezaQuantidades Boolean
+  farois             Boolean
+  lanternas          Boolean
+  luzInternaBau      Boolean
+  truck              truckVerification? @relation("BooleanValues", fields: [truckId], references: [id])
+  truckId            String?            @unique
+  createdAt          DateTime           @default(now())
+  updateAt           DateTime           @default(now())
+}
+
+model TruckStringValues {
+  id                 String             @id @default(uuid())
+  clrv               String?
+  cvv                String?
+  antt               String?
+  furos              String?
+  vedacao            String?
+  borrachasPortas    String?
+  aparelhoFrio       String?
+  ganchos            String?
+  pneusIluminacao    String?
+  limpezaQuantidades String?
+  farois             String?
+  lanternas          String?
+  luzInternaBau      String?
+  truck              truckVerification? @relation("StringValues", fields: [truckId], references: [id])
+  truckId            String?            @unique
+  createdAt          DateTime           @default(now())
+  updateAt           DateTime           @default(now())
+}
+
+model UserRole {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique
+  role      Role     @relation(fields: [roleId], references: [id])
+  roleId    String
+  createdAt DateTime @default(now())
+  updateAt  DateTime @default(now())
+}
+
+model User {
+  id           String         @id @default(uuid())
+  name         String
+  email        String         @unique
+  createdAt    DateTime       @default(now())
+  updateAt     DateTime       @default(now())
+  userRole     UserRole?
+  systemRole   UserSystemRole @default(CREATED)
+  lastLoggedIn DateTime?      @default(now())
+}
+
+enum UserSystemRole {
+  USER
+  BLOCKED
+  CREATED
+  PENDING
+  BANNED
+}
+
+model Role {
+  id          String     @id @default(uuid())
+  name        String?
+  description String?
+  userRole    UserRole[]
+  createdAt   DateTime   @default(now())
+  updateAt    DateTime   @default(now())
+}
